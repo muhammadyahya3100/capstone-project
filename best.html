@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HelpNova - Ultra Enhanced with AI</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+:root {
+  --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --text: #ffffff;
+  --accent: #ff6b6b;
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+html, body { height: 100%; width: 100%; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: 0.5s;
+  overflow-x: hidden;
+  -webkit-font-smoothing:antialiased;
+  min-height: 100vh;
+}
+nav {
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 30px;background:rgba(0,0,0,0.2);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,0.2);
+  position:sticky;top:0;z-index:999;
+}
+nav .logo {font-size:28px;font-weight:bold;color:var(--accent);text-shadow:0 0 10px var(--accent);}
+nav ul {list-style:none;display:flex;gap:25px;padding:0;margin:0;}
+nav ul li a {text-decoration:none;color:var(--text);font-weight:600;transition:0.3s;position:relative;}
+nav ul li a:hover {color:var(--accent);}
+.theme-switcher button {
+  border:none;padding:8px 15px;cursor:pointer;border-radius:20px;
+  background:var(--accent);color:#fff;font-weight:600;transition:0.3s;
+}
+.dark {--bg:linear-gradient(135deg,#0b0b0d,#1a1a2e);--text:#f1f1f1;--accent:#7f5eff;}
+.futuristic {--bg:linear-gradient(135deg,#4b00e0,#8e2de2);--text:#ffffff;--accent:#00e7ff;}
+section {padding:60px 30px;}
+.course-card, .tool-card, .ai-card {
+  background:var(--card-bg);border:1px solid rgba(255,255,255,0.2);
+  border-radius:15px;padding:30px;margin-bottom:30px;backdrop-filter:blur(10px);
+  box-shadow:var(--shadow);transition:0.3s;
+}
+.course-card button, .tool-card button, .ai-card button {
+  background:var(--accent);color:#fff;border:none;padding:10px 20px;
+  border-radius:25px;cursor:pointer;font-weight:600;transition:0.3s;
+}
+.playground {
+  border:1px solid rgba(255,255,255,0.3);
+  padding:15px;margin-top:15px;background:rgba(0,0,0,0.1);
+  border-radius:10px;
+}
+iframe.preview {
+  width:100%;height:250px;background:#fff;border-radius:10px;
+  border:none;box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><i class="fas fa-rocket"></i> HelpNova</div>
+  <ul>
+    <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="#courses"><i class="fas fa-book"></i> Courses</a></li>
+    <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
+    <li><a href="#ai"><i class="fas fa-robot"></i> AI Assistant</a></li>
+  </ul>
+  <div class="theme-switcher">
+    <button onclick="setTheme('')">Light</button>
+    <button onclick="setTheme('dark')">Dark</button>
+    <button onclick="setTheme('futuristic')">Futuristic</button>
+  </div>
+</nav>
+
+<!-- Home -->
+<section id="home">
+  <h1>🚀 Welcome to HelpNova!</h1>
+  <p>Learn, play, and chat with AI. Interactive learning for all!</p>
+</section>
+
+<!-- Courses -->
+<section id="courses">
+  <h2><i class="fas fa-graduation-cap"></i> Interactive Learning Courses</h2>
+
+  <div class="course-card">
+    <h3><i class="fas fa-code"></i> HTML Basics (Coding)</h3>
+    <p>Write HTML and instantly see results below!</p>
+    <div class="playground">
+      <textarea id="htmlCode" rows="6" cols="60" placeholder="Type HTML here...">
+<h1>Hello HelpNova!</h1>
+<p>This is a live preview.</p>
+      </textarea><br>
+      <button onclick="runHTML()">▶ Run</button>
+      <iframe id="htmlPreview" class="preview"></iframe>
+    </div>
+  </div>
+
+  <div class="course-card">
+    <h3><i class="fas fa-calculator"></i> Math Basics</h3>
+    <button onclick="startQuiz('math')">Start Quiz</button>
+  </div>
+</section>
+
+<!-- Tools -->
+<section id="tools">
+  <h2><i class="fas fa-wrench"></i> Mini Tools</h2>
+  <div class="tool-card">
+    <h3><i class="fas fa-square"></i> Area Calculator</h3>
+    <label>Length: <input type="number" id="length"></label>
+    <label>Width: <input type="number" id="width"></label>
+    <button onclick="calculateArea()">Calculate</button>
+    <p id="areaResult"></p>
+  </div>
+</section>
+
+<!-- AI -->
+<section id="ai">
+  <h2><i class="fas fa-robot"></i> AI Assistant (Mock)</h2>
+  <div class="ai-card">
+    <p>Type a prompt (mock AI)</p>
+    <input id="aiInput" placeholder="Ask AI something...">
+    <button onclick="sendMessage()">Send</button>
+    <div id="aiChat" style="margin-top:15px;"></div>
+  </div>
+</section>
+
+<script>
+// THEME
+function setTheme(theme){document.body.className=theme;localStorage.setItem("theme",theme);}
+const savedTheme=localStorage.getItem("theme");if(savedTheme)setTheme(savedTheme);
+
+// HTML Playground live preview
+function runHTML(){
+  const code=document.getElementById("htmlCode").value;
+  const iframe=document.getElementById("htmlPreview");
+  const doc=iframe.contentDocument||iframe.contentWindow.document;
+  doc.open();
+  doc.write(code);
+  doc.close();
+}
+
+// Calculator
+function calculateArea(){
+  const l=parseFloat(document.getElementById("length").value);
+  const w=parseFloat(document.getElementById("width").value);
+  const r=document.getElementById("areaResult");
+  if(!isNaN(l)&&!isNaN(w))r.innerText=`Area: ${l*w}`;
+  else r.innerText="Enter valid numbers.";
+}
+
+// Mock AI
+function sendMessage(){
+  const msg=document.getElementById("aiInput").value;
+  if(!msg)return;
+  const chat=document.getElementById("aiChat");
+  const p=document.createElement("p");
+  p.innerHTML=`<b>You:</b> ${msg}<br><i>AI:</i> This is a mock reply.`;
+  chat.appendChild(p);
+  document.getElementById("aiInput").value="";
+}
+
+// Quiz
+function startQuiz(c){
+  alert("Quiz for "+c+" is under development.");
+}
+</script>
+<footer></footer>
+</body>
+</html>
