@@ -28,10 +28,100 @@ section { padding: 20px 0; }
 .tool-card button { background: var(--accent); color: #fff; border: none; padding: 8px 15px; border-radius: 10px; cursor:pointer; }
 .tool-card button:hover { background:#ff5252; }
 #palette div { width:100px; height:100px; border-radius:10px; margin-right:10px; margin-bottom:10px; }
+/* Hamburger for small screens */
+.hamburger { display:none; background:transparent; border:none; color:var(--text); font-size:22px; cursor:pointer; }
+.nav-center::-webkit-scrollbar { height:6px; }
+.nav-center::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius:6px; }
+
+/* Code block and AI UI */
+.code-area { position: relative; margin-top:15px; }
+.code-actions { display:flex; gap:8px; position:absolute; right:8px; top:8px; }
+.code-actions button { background: rgba(0,0,0,0.3); color: #fff; border: none; padding:6px 10px; border-radius:6px; cursor:pointer; }
+.ai-message.user { background: linear-gradient(90deg,var(--accent), #ff8a8a); color:#111; }
+.ai-message.ai { background: rgba(255,255,255,0.06); color:var(--text); }
+
+@media (max-width: 720px) {
+  nav { padding-left:10px; padding-right:10px; }
+  .nav-inner { gap: 10px; }
+  .hamburger { display:block; }
+  .nav-center { display:none; }
+  .theme-switcher { display:none; }
+}
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: rgba(0, 0, 0, 0.2);  
+  backdrop-filter: blur(10px);      /* ← یہ لائن blur پیدا کر رہی ہے */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  animation: slideIn 1s ease-out;
+}
+
+/* Make nav content centered while nav spans full width */
+nav .nav-inner { max-width: 1200px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+nav .logo { display:flex; align-items:center; gap:10px; }
+nav ul { list-style: none; display: flex; gap: 25px; padding: 0; margin: 0; align-items:center; white-space: nowrap; }
+/* allow horizontal scrolling on very small screens without breaking layout */
+nav .nav-center { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+nav ul li { flex: 0 0 auto; }
+nav ul li a { display:flex; align-items:center; gap:8px; padding:6px 4px; }
+/* ensure nav takes full width and no weird white gaps */
+html { background: var(--bg); }
+nav .logo { font-size: 28px; font-weight: bold; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+nav ul { list-style: none; display: flex; gap: 25px; padding: 0; margin: 0; }
+nav ul li a { text-decoration: none; color: var(--text); font-weight: 600; transition: 0.3s; position: relative; }
+nav ul li a:hover { color: var(--accent); transform: translateY(-2px); }
+nav ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--accent); transition: 0.3s; }
+nav ul li a:hover::after { width: 100%; }
+.theme-switcher { display: flex; gap: 10px; }
+.theme-switcher button {
+  border: none; padding: 8px 15px; cursor: pointer; border-radius: 20px; background: var(--accent); color: #fff; font-weight: 600; transition: 0.3s; box-shadow: var(--shadow);
+}
+.theme-switcher button:hover { transform: scale(1.05); background: #ff5252; }
+.dark { --bg: linear-gradient(135deg, #0b0b0d 0%, #1a1a2e 100%); --text: #f1f1f1; --accent: #7f5eff; --card-bg: rgba(255, 255, 255, 0.05); }
+.futuristic { --bg: linear-gradient(135deg, #4b00e0 0%, #8e2de2 100%); --text: #ffffff; --accent: #00e7ff; --card-bg: rgba(0, 255, 255, 0.1); }
+section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
+.course-card, .tool-card, .ai-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px; padding: 30px; margin-bottom: 30px; backdrop-filter: blur(10px); box-shadow: var(--shadow); transition: 0.3s; }
+.course-card:hover, .tool-card:hover, .ai-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2); }
+.course-card button, .tool-card button, .ai-card button { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: 0.3s; box-shadow: var(--shadow); }
+.course-card button:hover, .tool-card button:hover, .ai-card button:hover { background: #ff5252; transform: scale(1.05); }
+.profile { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px; padding: 30px; margin-top: 30px; backdrop-filter: blur(10px); box-shadow: var(--shadow); }
+.playground { border: 1px solid rgba(255, 255, 255, 0.3); padding: 15px; margin-top: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
+.premium { background: linear-gradient(45deg, #ff6b6b, #ffa500); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: var(--shadow); }
+.ai-chat { max-height: 400px; overflow-y: auto; background: rgba(0, 0, 0, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; }
+.ai-message { margin-bottom: 10px; padding: 10px; border-radius: 10px; }
+.ai-message.user { background: var(--accent); text-align: right; }
+.ai-message.ai { background: rgba(255, 255, 255, 0.1); }
 </style>
 </head>
 <body>
-
+<nav>
+  <div class="nav-inner">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button class="hamburger" aria-label="Open menu" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
+      <div class="logo"><img src="HelpNova.png" style="width: 70px; height: 70px;"  class="border border-5 rounded-circle" alt="HelpNova Logo"><i class="fas fa-rocket"></i> HelpNova</div>
+    </div>
+    <div class="nav-center">
+      <ul>
+        <li><a href="landingultimate.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#courses"><i class="fas fa-book"></i> Courses</a></li>
+        <li><a href="tool.html"><i class="fas fa-tools"></i> Tools</a></li>
+        <li><a href="ai.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+        <li><a href="code.html"><i class="fas fa-play"></i> Code Runner</a></li>
+        <li><a href="#premium"><i class="fas fa-crown"></i> Premium</a></li>
+      </ul>
+    </div>
+    <div class="theme-switcher">
+      <button onclick="setTheme('')"><i class="fas fa-sun"></i> Light</button>
+      <button onclick="setTheme('dark')"><i class="fas fa-moon"></i> Dark</button>
+      <button onclick="setTheme('futuristic')"><i class="fas fa-star"></i> Futuristic</button>
+    </div>
+  </div>
+</nav>
 <h1><i class="fas fa-wrench"></i> Mini Tools & Quizzes</h1>
 
 <section id="tools">
@@ -141,6 +231,13 @@ function startTimer() {
         document.getElementById("timerDisplay").innerText=`${minutes}:${seconds}`;
     },1000);
 }
+// Theme Switcher
+function setTheme(theme) {
+  document.body.className = theme;
+  localStorage.setItem("theme", theme);
+}
+const savedTheme = localStorage.getItem("theme");
+if(savedTheme) setTheme(savedTheme);
 
 // Quiz system (simplified)
 function startQuiz(course) {
