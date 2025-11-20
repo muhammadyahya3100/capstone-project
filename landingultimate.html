@@ -58,14 +58,15 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.2);  
+  backdrop-filter: blur(10px);      /* ← یہ لائن blur پیدا کر رہی ہے */
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   position: sticky;
   top: 0;
   z-index: 999;
   animation: slideIn 1s ease-out;
 }
+
 /* Make nav content centered while nav spans full width */
 nav .nav-inner { max-width: 1200px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
 nav .logo { display:flex; align-items:center; gap:10px; }
@@ -115,11 +116,11 @@ section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
     </div>
     <div class="nav-center">
       <ul>
-        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="landingultimate.html"><i class="fas fa-home"></i> Home</a></li>
         <li><a href="#courses"><i class="fas fa-book"></i> Courses</a></li>
-        <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
-        <li><a href="#ai"><i class="fas fa-robot"></i> AI Assistant</a></li>
-        <li><a href="#profile"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="tool.html"><i class="fas fa-tools"></i> Tools</a></li>
+        <li><a href="ai.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
+        <li><a href="code.html"><i class="fas fa-play"></i> Code Runner</a></li>
         <li><a href="#premium"><i class="fas fa-crown"></i> Premium</a></li>
       </ul>
     </div>
@@ -135,98 +136,6 @@ section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
   <h1><i class="fas fa-sparkles"></i> Welcome to HelpNova!</h1>
   <p>Learn, play, earn badges, and chat with AI! Interactive courses, mini-tools, gamified progress, and AI-powered quizzes await you.</p>
 </section>
-
-<!-- Courses -->
-<section id="courses">
-  <h2><i class="fas fa-graduation-cap"></i> Interactive Learning Courses</h2>
-  <div class="course-card">
-    <h3><i class="fas fa-code"></i> HTML Basics (Coding)</h3>
-    <p>Learn HTML structure and tags with an interactive playground.</p>
-    <div class="playground">
-      <h4><i class="fas fa-play"></i> Interactive Coding Playground</h4>
-      <textarea id="htmlCode" rows="6" cols="60" placeholder="Type your HTML code here..."><h1>Hello World</h1><p>This is a paragraph.</p></textarea><br>
-      <div class="code-area">
-        <div class="code-actions">
-          <button onclick="runHTML()"><i class="fas fa-play-circle"></i> Run</button>
-          <button onclick="copyCode('htmlCode')"><i class="fas fa-copy"></i> Copy</button>
-          <button onclick="downloadCode('htmlCode','snippet.html')"><i class="fas fa-download"></i> Download</button>
-        </div>
-        <pre id="htmlOutput" class="language-markup" style="border:1px solid rgba(255,255,255,0.3); padding:15px; margin-top:15px; background: rgba(0,0,0,0.08); border-radius:10px;"></pre>
-      </div>
-    </div>
-    <button onclick="startQuiz('html')"><i class="fas fa-question-circle"></i> Start Quiz</button>
-  </div>
-  <div class="course-card">
-    <h3><i class="fas fa-calculator"></i> Math Basics</h3>
-    <p>Master addition, subtraction, and more.</p>
-    <button onclick="startQuiz('math')"><i class="fas fa-question-circle"></i> Start Quiz</button>
-  </div>
-  <div class="course-card">
-    <h3><i class="fas fa-atom"></i> Science Basics</h3>
-    <p>Explore planets, elements, and the universe.</p>
-    <button onclick="startQuiz('science')"><i class="fas fa-question-circle"></i> Start Quiz</button>
-  </div>
-  <div class="course-card">
-    <h3><i class="fas fa-language"></i> English Basics</h3>
-    <p>Improve grammar, vocabulary, and writing.</p>
-    <button onclick="startQuiz('english')"><i class="fas fa-question-circle"></i> Start Quiz</button>
-  </div>
-  <div class="course-card">
-    <h3><i class="fas fa-palette"></i> Art & Design</h3>
-    <p>Learn colors, shapes, and creative tools.</p>
-    <button onclick="startQuiz('art')"><i class="fas fa-question-circle"></i> Start Quiz</button>
-  </div>
-</section>
-
-<!-- Tools -->
-<section id="tools">
-  <h2><i class="fas fa-wrench"></i> Mini Tools</h2>
-  <div class="tool-card">
-    <h3><i class="fas fa-square"></i> Area & Perimeter Calculator</h3>
-    <label>Length: <input type="number" id="length" placeholder="e.g., 10"></label>
-    <label>Width: <input type="number" id="width" placeholder="e.g., 5"></label>
-    <button onclick="calculateArea()"><i class="fas fa-calculator"></i> Calculate</button>
-    <p id="areaResult"></p>
-  </div>
-  <div class="tool-card">
-    <h3><i class="fas fa-exchange-alt"></i> Currency & Unit Converter</h3>
-    <label>Amount: <input type="number" id="amount" placeholder="e.g., 100"></label>
-    <label>From: <select id="fromCurrency"><option>USD</option><option>EUR</option><option>INR</option><option>GBP</option></select></label>
-    <label>To: <select id="toCurrency"><option>USD</option><option>EUR</option><option>INR</option><option>GBP</option></select></label>
-    <button onclick="convertCurrency()"><i class="fas fa-sync"></i> Convert</button>
-    <p id="currencyResult"></p>
-  </div>
-  <div class="tool-card">
-    <h3><i class="fas fa-palette"></i> Color Palette Generator</h3>
-    <button onclick="generatePalette()"><i class="fas fa-magic"></i> Generate Palette</button>
-    <div id="palette" style="display:flex; gap:15px; margin-top:15px; flex-wrap:wrap;"></div>
-  </div>
-  <div class="tool-card">
-    <h3><i class="fas fa-list-check"></i> To-Do List / Note App</h3>
-    <input type="text" id="todoInput" placeholder="Add a task or note">
-    <button onclick="addTodo()"><i class="fas fa-plus"></i> Add</button>
-    <ul id="todoList" style="margin-top:15px;"></ul>
-  </div>
-  <div class="tool-card">
-    <h3><i class="fas fa-clock"></i> Pomodoro Timer</h3>
-    <button onclick="startTimer()"><i class="fas fa-play"></i> Start 25min Timer</button>
-    <p id="timerDisplay">00:00</p>
-  </div>
-</section>
-
-<!-- AI Assistant -->
-<section id="ai">
-  <h2><i class="fas fa-robot"></i> AI Assistant (ChatGPT-like)</h2>
-  <div class="ai-card">
-    <p>Chat with AI to generate quizzes, code, or get help!</p>
-    <div class="ai-chat" id="aiChat"></div>
-    <input type="text" id="aiInput" placeholder="Ask AI anything... (try: create html header)" style="width:80%; padding:10px; border-radius:20px; border:none; margin-right:10px;">
-    <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i> Send</button>
-    <button onclick="generateQuizAI()"><i class="fas fa-question-circle"></i> Generate Quiz</button>
-    <button onclick="generateCodeAI()"><i class="fas fa-code"></i> Generate Code</button>
-  </div>
-</section>
-
 <!-- Profile -->
 <section id="profile">
   <h2><i class="fas fa-chart-line"></i> Progress Tracking</h2>
@@ -333,30 +242,7 @@ function startQuiz(course) {
     
 }
 updateProfile();
-// HTML Playground code runner
-function runHTML() {
-  const code = document.getElementById("htmlCode").value;
-  // Show rendered result inside an iframe-like preview or as highlighted code
-  const out = document.getElementById("htmlOutput");
-  // Render as highlighted markup (Prism will style it)
-  out.textContent = code;
-  if(window.Prism) Prism.highlightElement(out);
-}
-// Copy code helper
-function copyCode(elementId) {
-  const code = document.getElementById(elementId).value || document.getElementById(elementId).textContent;
-  navigator.clipboard.writeText(code).then(()=>{
-    alert('Code copied to clipboard');
-  }).catch(()=> alert('Unable to copy'));
-}
-// Download code helper
-function downloadCode(elementId, filename) {
-  const code = document.getElementById(elementId).value || document.getElementById(elementId).textContent;
-  const blob = new Blob([code], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-}
+
 // Mobile nav toggle
 function toggleNav(){
   const center = document.querySelector('.nav-center');
@@ -405,16 +291,27 @@ function generatePalette() {
     }
 }
 // To-Do List
-function addTodo() {
-    const input = document.getElementById("todoInput");
-    const task = input.value.trim();
-    if(task) {
-        const li = document.createElement("li");
-        li.innerText = task;
-        document.getElementById("todoList").appendChild(li);
-        input.value = "";
+const myinput = document.getElementById("todoInput");
+    const myitem = document.getElementById("todoList");
+
+    function addTodo() {
+      const itemText = myinput.value.trim();
+      if(itemText) {
+        addItem(itemText);
+      }
     }
-}
+function addItem(itemText) {
+      var li = `<li>🛒${itemText} <button onclick="deleteItem(this)">Delete</button></li>`;
+      myitem.insertAdjacentHTML("beforeend", li);
+      myinput.value = "";
+      myinput.focus();
+    }
+
+    function deleteItem(button) {
+      var li = button.parentElement;
+      myitem.removeChild(li);
+    }
+
 // Pomodoro Timer
 function startTimer() {
     clearInterval(timerInterval);
@@ -506,8 +403,63 @@ function generateCertificate() {
 </script>
 </body>
 <!-- Prism JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
-</html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+.carousel-inner img {
+    width: 100%;               /* Take full width of the carousel item */
+    max-width: 300px;          /* Optional: limit maximum size */
+    height: 200px;             /* Fixed height for uniformity */
+    object-fit: cover;         /* Crop image without stretching */
+    display: block;            /* Centering helper */
+    margin: 0 auto;            /* Center horizontally */
+    border-radius: 10px;       /* Optional: rounded corners */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Optional: subtle shadow */
+    transition: transform 0.3s ease;       /* Optional: smooth hover effect */
+}
+
+.carousel-inner img:hover {
+    transform: scale(1.05);    /* Optional: slight zoom on hover */
+}
+
+</style>
+<body>
+
+<div class="container mt-5">
+  <div id="wow1" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#wow1" data-slide-to="0" class="active"></li>
+      <li data-target="#wow1" data-slide-to="1"></li>
+      <li data-target="#wow1" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Slides -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="HelpNova.png" class="d-block w-100" alt="Image 1">
+      </div>
+      <div class="carousel-item">
+        <img src="HelpNova.png" class="d-block w-100" alt="Image 2">
+      </div>
+      <div class="carousel-item">
+        <img src="HelpNova.png" class="d-block w-100" alt="Image 3">
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <a class="carousel-control-prev" href="#wow1" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#wow1" role="button" data-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

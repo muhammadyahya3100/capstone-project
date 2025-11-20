@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HelpNova - Mini Tools & Quizzes</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root {
+  --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --text: #ffffff;
+  --accent: #ff6b6b;
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  margin:0;
+  padding:20px;
+}
+section { padding: 20px 0; }
+.tool-card { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.tool-card button { background: var(--accent); color: #fff; border: none; padding: 8px 15px; border-radius: 10px; cursor:pointer; }
+.tool-card button:hover { background:#ff5252; }
+#palette div { width:100px; height:100px; border-radius:10px; margin-right:10px; margin-bottom:10px; }
+</style>
+</head>
+<body>
+
+<h1><i class="fas fa-wrench"></i> Mini Tools & Quizzes</h1>
+
+<section id="tools">
+  <div class="tool-card">
+    <h3><i class="fas fa-square"></i> Area & Perimeter Calculator</h3>
+    <label>Length: <input type="number" id="length" placeholder="e.g., 10"></label>
+    <label>Width: <input type="number" id="width" placeholder="e.g., 5"></label>
+    <button onclick="calculateArea()"><i class="fas fa-calculator"></i> Calculate</button>
+    <p id="areaResult"></p>
+  </div>
+
+  <div class="tool-card">
+    <h3><i class="fas fa-exchange-alt"></i> Currency Converter</h3>
+    <label>Amount: <input type="number" id="amount" placeholder="e.g., 100"></label>
+    <label>From: <select id="fromCurrency"><option>USD</option><option>EUR</option><option>INR</option><option>GBP</option></select></label>
+    <label>To: <select id="toCurrency"><option>USD</option><option>EUR</option><option>INR</option><option>GBP</option></select></label>
+    <button onclick="convertCurrency()"><i class="fas fa-sync"></i> Convert</button>
+    <p id="currencyResult"></p>
+  </div>
+
+  <div class="tool-card">
+    <h3><i class="fas fa-palette"></i> Color Palette Generator</h3>
+    <button onclick="generatePalette()"><i class="fas fa-magic"></i> Generate Palette</button>
+    <div id="palette" style="display:flex; flex-wrap:wrap;"></div>
+  </div>
+
+  <div class="tool-card">
+    <h3><i class="fas fa-list-check"></i> To-Do List / Note App</h3>
+    <input type="text" id="todoInput" placeholder="Add a task or note">
+    <button onclick="addTodo()"><i class="fas fa-plus"></i> Add</button>
+    <ul id="todoList" style="margin-top:15px;"></ul>
+  </div>
+
+  <div class="tool-card">
+    <h3><i class="fas fa-clock"></i> Pomodoro Timer</h3>
+    <button onclick="startTimer()"><i class="fas fa-play"></i> Start 25min Timer</button>
+    <p id="timerDisplay">00:00</p>
+  </div>
+
+  <div class="tool-card">
+    <h3><i class="fas fa-question-circle"></i> Quizzes</h3>
+    <button onclick="startQuiz('html')">HTML Basics Quiz</button>
+    <button onclick="startQuiz('math')">Math Basics Quiz</button>
+    <button onclick="startQuiz('science')">Science Basics Quiz</button>
+    <button onclick="startQuiz('english')">English Basics Quiz</button>
+    <button onclick="startQuiz('art')">Art & Design Quiz</button>
+  </div>
+</section>
+
+<script>
+function calculateArea() {
+    const length = parseFloat(document.getElementById("length").value);
+    const width = parseFloat(document.getElementById("width").value);
+    if(!isNaN(length) && !isNaN(width)) {
+        const area = length * width;
+        document.getElementById("areaResult").innerText = `Area: ${area}`;
+    } else {
+        document.getElementById("areaResult").innerText = "Please enter valid numbers.";
+    }
+}
+function convertCurrency() {
+    const amount = parseFloat(document.getElementById("amount").value);
+    const from = document.getElementById("fromCurrency").value;
+    const to = document.getElementById("toCurrency").value;
+    if(!isNaN(amount)) {
+        const rates = { USD: 1, EUR: 0.9, INR: 75, GBP: 0.8 };
+        const converted = (amount / rates[from]) * rates[to];
+        document.getElementById("currencyResult").innerText = `Converted Amount: ${converted.toFixed(2)} ${to}`;
+    } else {
+        document.getElementById("currencyResult").innerText = "Please enter a valid amount.";
+    }
+}
+function generatePalette() {
+    const paletteDiv = document.getElementById("palette");
+    paletteDiv.innerHTML = "";
+    for(let i=0;i<5;i++){
+        const color = '#' + Math.floor(Math.random()*16777215).toString(16);
+        const colorBox = document.createElement("div");
+        colorBox.style.background = color;
+        paletteDiv.appendChild(colorBox);
+    }
+}
+const myinput = document.getElementById("todoInput");
+const myitem = document.getElementById("todoList");
+function addTodo() {
+    const itemText = myinput.value.trim();
+    if(itemText) addItem(itemText);
+}
+function addItem(itemText) {
+    const li = `<li>🛒${itemText} <button onclick="deleteItem(this)">Delete</button></li>`;
+    myitem.insertAdjacentHTML("beforeend", li);
+    myinput.value = "";
+}
+function deleteItem(button) {
+    button.parentElement.remove();
+}
+let timerInterval;
+let timeLeft = 1500;
+function startTimer() {
+    clearInterval(timerInterval);
+    timeLeft = 1500;
+    timerInterval = setInterval(()=>{
+        if(timeLeft<=0){ clearInterval(timerInterval); document.getElementById("timerDisplay").innerText="00:00"; alert("Time's up!"); return; }
+        timeLeft--;
+        const minutes = String(Math.floor(timeLeft/60)).padStart(2,'0');
+        const seconds = String(timeLeft%60).padStart(2,'0');
+        document.getElementById("timerDisplay").innerText=`${minutes}:${seconds}`;
+    },1000);
+}
+
+// Quiz system (simplified)
+function startQuiz(course) {
+  const quizzes = {
+    html: [{q:"What does HTML stand for?", a:"hypertext markup language"}],
+    math: [{q:"What is 5+3?", a:"8"}],
+    science: [{q:"Largest planet?", a:"jupiter"}],
+    english: [{q:"Plural of 'child'?", a:"children"}],
+    art: [{q:"Primary color: Red + Blue = ?", a:"purple"}]
+  };
+  const quiz = quizzes[course];
+  let correct = 0;
+  quiz.forEach(item=>{
+    const answer = prompt(item.q);
+    if(answer && answer.toLowerCase().includes(item.a)) correct++;
+  });
+  alert(`You got ${correct}/${quiz.length} correct!`);
+}
+</script>
+</body>
+</html>

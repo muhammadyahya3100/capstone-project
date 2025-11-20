@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultra AI Chat - EchoBot Galaxy</title>       
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <nav>
+        <div class="nav-left">
+            <a href="ai.html" class="logo">Ultra EchoBot</a>
+        </div>
+        <div class="nav-center">
+            <ul>
+                <li><a href="landingultimate.html"><i class="fas fa-home"></i> Home</a></li>
+              
+        </div>
+        <div class="nav-right">
+            <button class="theme-switcher" onclick="toggleTheme()">Switch Theme</button>
+        </div>
+    </nav>
+       <style>
+        /* Ultra Enhanced: Interactive particle background, multiple themes, smooth animations */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+
+        :root {
+            --bg-primary: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            --bg-secondary: rgba(255, 255, 255, 0.05);
+            --text-primary: #e0e0e0;
+            --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --user-bg: var(--accent-gradient);
+            --ai-bg: rgba(255, 255, 255, 0.1);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --font-main: 'Orbitron', monospace;
+        }
+
+        [data-theme="neon"] {
+            --bg-primary: linear-gradient(135deg, #000000 0%, #0f0f23 50%, #1a0d2e 100%);
+            --bg-secondary: rgba(0, 255, 255, 0.1);
+            --text-primary: #00ffff;
+            --accent-gradient: linear-gradient(135deg, #ff00ff 0%, #00ffff 100%);
+            --user-bg: var(--accent-gradient);
+            --ai-bg: rgba(0, 255, 0, 0.1);
+            --border-color: rgba(0, 255, 255, 0.2);
+        }
+
+        [data-theme="minimal"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --text-primary: #333333;
+            --accent-gradient: linear-gradient(135deg, #4a90e2 0%, #7b68ee 100%);
+            --user-bg: var(--accent-gradient);
+            --ai-bg: #f0f0f0;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .chat-container {
+            width: 95%;
+            max-width: 900px;
+            height: 90vh;
+            background: var(--bg-secondary);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--accent-gradient);
+            padding: 20px;
+            text-align: center;
+            border-radius: 25px 25px 0 0;
+            color: white;
+            font-size: 28px;
+            font-weight: 900;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 25px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-gradient) var(--border-color);
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--accent-gradient);
+            border-radius: 10px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            word-wrap: break-word;
+            animation: fadeInUp 0.4s ease-out;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message-header {
+            font-size: 12px;
+            opacity: 0.7;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: var(--user-bg);
+            color: white;
+        }
+
+        .ai-message {
+            align-self: flex-start;
+            background: var(--ai-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 15px 20px;
+            background: var(--ai-bg);
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .typing-dots {
+            display: inline-block;
+            animation: typing 1.5s infinite;
+        }
+
+        @keyframes typing {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0 0 25px 25px;
+            gap: 10px;
+            align-items: center;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-primary);
+            outline: none;
+            font-size: 16px;
+            font-family: var(--font-main);
+        }
+
+        #userInput::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        #sendBtn, #voiceBtn {
+            padding: 15px;
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #voiceBtn {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        #sendBtn:hover, #voiceBtn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        #voiceBtn.recording {
+            background: #ff4757;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .emoji-reaction {
+            cursor: pointer;
+            font-size: 20px;
+            margin-left: 10px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .emoji-reaction:hover {
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chat-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .chat-header {
+                font-size: 22px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="cosmic">
+    <canvas id="particles-canvas"></canvas>
+    <div class="chat-container">
+        <div class="chat-header">
+            <span>Ultra EchoBot - Galactic AI Companion</span>
+            <button class="theme-toggle" onclick="toggleTheme()">🌌 Theme</button>
+        </div>
+        <div class="chat-messages" id="chatMessages" role="log" aria-live="polite">
+            <!-- Messages will load here -->
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+            <span class="typing-dots">EchoBot is typing</span> <span aria-hidden="true">...</span>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Speak to the stars... (or use voice!)" onkeypress="handleKeyPress(event)">
+            <div class="input-controls">
+                <button id="voiceBtn" onclick="toggleVoiceInput()" title="Voice Input" aria-label="Voice Input">🎤</button>
+                <button id="sendBtn" onclick="sendMessage()" title="Send" aria-label="Send Message">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Particle Background for Ultra Immersion
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            initParticles();
+        });
+
+        initParticles();
+        animateParticles();
+
+        // Theme Toggle
+        const themes = ['cosmic', 'neon', 'minimal'];
+        let currentTheme = 0;
+        function toggleTheme() {
+            currentTheme = (currentTheme + 1) % themes.length;
+            document.body.setAttribute('data-theme', themes[currentTheme]);
+            localStorage.setItem('theme', themes[currentTheme]);
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'cosmic';
+        document.body.setAttribute('data-theme', savedTheme);
+        currentTheme = themes.indexOf(savedTheme);
+
+        // Advanced AI Response System
+        function getAIResponse(userMessage) {
+            const lowerMsg = userMessage.toLowerCase();
+            let response = '';
+
+            if (lowerMsg.includes('?')) {
+                // Question detection
+                const qResponses = [
+                    `From the cosmos: That's a profound question! ${userMessage} The stars suggest pondering the infinite possibilities.`,
+                    `Galactic wisdom: ${userMessage} In the vast universe, answers often lie in curiosity itself.`,
+                    `Stellar query response: ${userMessage} Echoing back: Knowledge is the light in the dark void.`
+                ];
+                response = qResponses[Math.floor(Math.random() * qResponses.length)];
+            } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+                response = 'Greetings, star traveler! The cosmos welcomes you. What adventure shall we embark on today? 🌟';
+            } else if (lowerMsg.includes('joke')) {
+                response = 'Why did the astronaut break up with his girlfriend? He needed space! 🚀 Want another?';
+            } else if (lowerMsg.includes('weather')) {
+                response = 'The cosmic weather is clear with a chance of shooting stars tonight. For Earthly forecasts, consult your local oracle! ☄️';
+            } else if (lowerMsg.includes('love') || lowerMsg.includes('great')) {
+                response = 'Your words warm the cold vacuum of space! Thank you, explorer. ❤️ What else lights your galaxy?';
+            } else {
+                // Default echo with twist
+                const echoes = [
+                    `Echo from the nebula: "${userMessage}" – The universe resonates with your voice.`,
+                    `Quantum reply: "${userMessage}" Fascinating input! Like a black hole, it pulls me in for more.`,
+                    `Interstellar insight: "${userMessage}" Aligning orbits... Agreed, the stars approve.`
+                ];
+                response = echoes[Math.floor(Math.random() * echoes.length)];
+            }
+
+            return response;
+        }
+
+        // Chat History
+        function loadChatHistory() {
+            const saved = localStorage.getItem('chatHistory');
+            if (saved) {
+                const messages = JSON.parse(saved);
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = '';
+                messages.forEach(msg => addMessage(msg.text, msg.isUser, msg.timestamp));
+            } else {
+                // Welcome message
+                addMessage('Welcome to Ultra EchoBot! I\'m your AI companion from the stars. Chat away, use voice, or switch themes. What\'s on your mind? 🌌', false, new Date().toISOString());
+            }
+        }
+
+        function saveChatHistory() {
+            const chatMessages = document.getElementById('chatMessages');
+            const messages = Array.from(chatMessages.children).map(msg => {
+                const text = msg.textContent.trim();
+                const isUser = msg.classList.contains('user-message');
+                const timestamp = msg.dataset.timestamp;
+                return { text, isUser, timestamp };
+            });
+            localStorage.setItem('chatHistory', JSON.stringify(messages));
+        }
+
+        // Message Handling
+        function addMessage(text, isUser, timestamp = new Date().toISOString()) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user-message' : 'ai-message'}`;
+            messageDiv.dataset.timestamp = timestamp;
+
+            const time = new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            messageDiv.innerHTML = `
+                <div class="message-header">
+                    <span>${isUser ? 'You' : 'EchoBot'}</span>
+                    <span>${time}</span>
+                </div>
+                <div>${text}</div>
+                ${isUser ? '<span class="emoji-reaction" onclick="reactToMessage(this, \'👍\')">👍</span><span class="emoji-reaction" onclick="reactToMessage(this, \'❤️\')">❤️</span>' : ''}
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            if (!isUser) saveChatHistory();
+        }
+
+        function reactToMessage(element, emoji) {
+            element.textContent = emoji;
+            element.style.opacity = '1';
+        }
+
+        let isTyping = false;
+        function showTyping(show) {
+            document.getElementById('typingIndicator').style.display = show ? 'block' : 'none';
+            if (show && !isTyping) {
+                isTyping = true;
+                let dots = 0;
+                const typingDots = document.querySelector('.typing-dots');
+                const interval = setInterval(() => {
+                    dots = (dots + 1) % 4;
+                    typingDots.textContent = 'EchoBot is typing' + '.'.repeat(dots);
+                }, 500);
+                typingInterval = interval;
+            } else if (!show && isTyping) {
+                isTyping = false;
+                clearInterval(typingInterval);
+            }
+        }
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            addMessage(message, true);
+            userInput.value = '';
+            showTyping(true);
+
+            setTimeout(() => {
+                const aiResponse = getAIResponse(message);
+                showTyping(false);
+                addMessage(aiResponse, false);
+            }, 1500 + Math.random() * 2000); // Simulate typing delay
+        }
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        // Voice Input
+        let recognizing = false;
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.interimResults = false;
+        recognition.onstart = () => {
+            recognizing = true;
+            document.getElementById('voiceBtn').classList.add('recording');
+        };
+        recognition.onend = () => {
+            recognizing = false;
+            document.getElementById('voiceBtn').classList.remove('recording');
+        };
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            document.getElementById('userInput').value = transcript;
+            sendMessage();
+        };
+        function toggleVoiceInput() {
+            if (recognizing) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+        // Load chat history on start
+        loadChatHistory();
+    </script>
+</body>

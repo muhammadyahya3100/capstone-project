@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HelpNova - Ultra Enhanced with AI</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Fonts & icons -->
@@ -96,7 +95,7 @@ section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
 .course-card button, .tool-card button, .ai-card button { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer; font-weight: 600; transition: 0.3s; box-shadow: var(--shadow); }
 .course-card button:hover, .tool-card button:hover, .ai-card button:hover { background: #ff5252; transform: scale(1.05); }
 .profile { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 15px; padding: 30px; margin-top: 30px; backdrop-filter: blur(10px); box-shadow: var(--shadow); }
-.playground { border: 1px solid rgba(255, 255, 255, 0.3); padding: 15px; margin-top: 15px; background: rgba(0, 0, 0, 0.1); border-radius: 10px; }
+
 .premium { background: linear-gradient(45deg, #ff6b6b, #ffa500); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: var(--shadow); }
 .ai-chat { max-height: 400px; overflow-y: auto; background: rgba(0, 0, 0, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; }
 .ai-message { margin-bottom: 10px; padding: 10px; border-radius: 10px; }
@@ -116,7 +115,7 @@ section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
     </div>
     <div class="nav-center">
       <ul>
-        <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="best.html"><i class="fas fa-home"></i> Home</a></li>
         <li><a href="#courses"><i class="fas fa-book"></i> Courses</a></li>
         <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
         <li><a href="#ai"><i class="fas fa-robot"></i> AI Assistant</a></li>
@@ -137,26 +136,7 @@ section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
   <p>Learn, play, earn badges, and chat with AI! Interactive courses, mini-tools, gamified progress, and AI-powered quizzes await you.</p>
 </section>
 
-<!-- Courses -->
-<section id="courses">
-  <h2><i class="fas fa-graduation-cap"></i> Interactive Learning Courses</h2>
-  <div class="course-card">
-    <h3><i class="fas fa-code"></i> HTML Basics (Coding)</h3>
-    <p>Learn HTML structure and tags with an interactive playground.</p>
-    <div class="playground">
-      <h4><i class="fas fa-play"></i> Interactive Coding Playground</h4>
-      <textarea id="htmlCode" rows="6" cols="60" placeholder="Type your HTML code here..."><h1>Hello World</h1><p>This is a paragraph.</p></textarea><br>
-      <div class="code-area">
-        <div class="code-actions">
-          <button onclick="runHTML()"><i class="fas fa-play-circle"></i> Run</button>
-          <button onclick="copyCode('htmlCode')"><i class="fas fa-copy"></i> Copy</button>
-          <button onclick="downloadCode('htmlCode','snippet.html')"><i class="fas fa-download"></i> Download</button>
-        </div>
-        <pre id="htmlOutput" class="language-markup" style="border:1px solid rgba(255,255,255,0.3); padding:15px; margin-top:15px; background: rgba(0,0,0,0.08); border-radius:10px;"></pre>
-      </div>
-    </div>
-    <button onclick="startQuiz('html')"><i class="fas fa-question-circle"></i> Start Quiz</button>
-  </div>
+
   <div class="course-card">
     <h3><i class="fas fa-calculator"></i> Math Basics</h3>
     <p>Master addition, subtraction, and more.</p>
@@ -258,7 +238,13 @@ section { padding: 60px 30px; animation: fadeIn 1s ease-out; }
 <script>
 // Theme Switcher
 function setTheme(theme) {
-  document.body.className = theme;
+ function setTheme(theme){
+    document.body.classList.remove('dark','futuristic'); // remove previous themes
+    if(theme) document.body.classList.add(theme);       // add new theme
+    localStorage.setItem('theme', theme);
+}
+    document.body.className = ''; // reset
+    if(theme) document.body.classList.add(theme);
   localStorage.setItem("theme", theme);
 }
 const savedTheme = localStorage.getItem("theme");
@@ -383,16 +369,27 @@ function generatePalette() {
     }
 }
 // To-Do List
-function addTodo() {
-    const input = document.getElementById("todoInput");
-    const task = input.value.trim();
-    if(task) {
-        const li = document.createElement("li");
-        li.innerText = task;
-        document.getElementById("todoList").appendChild(li);
-        input.value = "";
+    const myinput = document.getElementById("todoInput");
+    const myitem = document.getElementById("todoList");
+
+    function addTodo() {
+      const itemText = myinput.value.trim();
+      if(itemText) {
+        addItem(itemText);
+      }
     }
-}
+function addItem(itemText) {
+      var li = `<li>🛒${itemText} <button onclick="deleteItem(this)">Delete</button></li>`;
+      myitem.insertAdjacentHTML("beforeend", li);
+      myinput.value = "";
+      myinput.focus();
+    }
+
+    function deleteItem(button) {
+      var li = button.parentElement;
+      myitem.removeChild(li);
+    }
+
 // Pomodoro Timer
 function startTimer() {
     clearInterval(timerInterval);
@@ -483,9 +480,20 @@ function generateCertificate() {
 
 </script>
 </body>
-<!-- Prism JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
-</html>
+<script>
+  
+function setTheme(theme){
+    document.body.classList.remove('dark','futuristic'); // remove old themes
+    if(theme) document.body.classList.add(theme);       // add new theme
+    localStorage.setItem('theme', theme);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if(savedTheme) setTheme(savedTheme);
+});
+
+
+</script>
 </body>
 </html>
