@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HelpNova — Yahya</title>
+
+  <style>
+    /* ---------- General layout & reset ---------- */
+    :root {
+      --bg: linear-gradient(135deg, #2c69c4 0%, #e255ac 100%);
+      --text: #ffffff;
+      --accent: #ff6b6b;
+      --card-bg: rgba(255, 255, 255, 0.1);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition: 0.5s;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* About Box text */
+    .about-box p.aboutone {
+      font-size: 18px;
+      line-height: 1.6;
+      color: rgb(44, 175, 55); /* سبز */
+    }
+
+    /* ---------- NAV / header ---------- */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      animation: slideIn 1s ease-out;
+    }
+
+    nav .nav-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    } 
+
+    .hamburger {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .logo { display:flex; align-items:center; gap:10px; font-size: 28px; font-weight: bold; color: var(--accent); text-shadow: 0 0 10px var(--accent); }
+    .logo img { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; }
+
+    .nav-center { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    nav ul { list-style: none; display: flex; gap: 25px; padding: 0; margin: 0; align-items:center; white-space: nowrap; }
+    nav ul li { flex: 0 0 auto; }
+    nav ul li a { display:flex; align-items:center; gap:8px; padding:6px 4px; text-decoration: none; color: var(--text); font-weight: 600; transition: 0.3s; position: relative; }
+    nav ul li a:hover { color: var(--accent); transform: translateY(-2px); }
+    nav ul li a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -5px; left: 0; background: var(--accent); transition: 0.3s; }
+    nav ul li a:hover::after { width: 100%; }
+
+    .theme-switcher { display: flex; gap: 10px; }
+    .theme-switcher button {
+      border: none; padding: 8px 15px; cursor: pointer; border-radius: 20px; background: var(--accent); color: #fff; font-weight: 600; transition: 0.3s; box-shadow: var(--shadow);
+    }
+    .theme-switcher button:hover { transform: scale(1.05); background: #ff5252; }
+
+    /* ---------- About Section ---------- */
+    .about-box {
+      background: white;
+      color: #111;
+      width: 70%;
+      margin: 40px auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .about-box h2 { margin-top: 0; }
+
+    /* ---------- Founder Section ---------- */
+    .founder-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 25px;
+      padding: 40px;
+      width: 70%;
+      margin: 0 auto 40px auto;
+      background: transparent;
+    }
+    .founder-section img {
+      width: 200px;
+      height: auto;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    /* Founder text white */
+    .founder-text {
+      max-width: 900px;
+      line-height: 1.6;
+      color: white;
+    }
+
+    /* ---------- Hire Section ---------- */
+    .hire-wrap{
+      width:90%;
+      max-width:880px;
+      margin: 40px auto;
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+      border-radius: 14px;
+      box-shadow: 0 10px 35px rgba(16,24,40,0.12);
+      overflow: hidden;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+    }
+    .hire-left{ padding:36px 40px; color: #111; }
+    .hire-left h1{ margin:0 0 8px 0; font-size:28px; color:#2b0e66; }
+    .note{ margin:10px 0 22px 0; color:#6b6b6b; line-height:1.5; font-size:15px; }
+    .hire-right{
+      background: linear-gradient(180deg, rgba(138,43,226,0.98), rgba(210,105,255,0.95));
+      color: white;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:16px;
+      text-align:center;
+    }
+    .badge{ background: rgba(255,255,255,0.15); padding:8px 12px; border-radius:999px; display:inline-block; font-weight:600; font-size:13px; }
+    .phone{ font-size:22px; font-weight:700; display:block; text-decoration:none; color:white; }
+    .btn-hire{ margin-top:10px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.18); padding:12px; border-radius:10px; color:white; cursor:pointer; text-decoration:none; font-weight:700; display:inline-block; }
+
+    /* ---------- Footer ---------- */
+    footer{
+      text-align: center;
+      background: #d269ff;
+      padding: 15px;
+      color: white;
+      font-size: 18px;
+    }
+    footer span{ color: red; font-size: 20px; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 720px) {
+      nav { padding-left:10px; padding-right:10px; }
+      .nav-inner { gap: 10px; }
+      .hamburger { display:block; }
+      .nav-center { display: none; }
+      .theme-switcher { display:none; }
+
+      .about-box, .founder-section, .hire-wrap { width: 95%; }
+      .founder-section { flex-direction: column; gap: 18px; padding: 20px; }
+      .hire-wrap { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- Theme classes ---------- */
+    .dark { --bg: linear-gradient(135deg, #0b0b0d 0%, #1a1a2e 100%); --text: #f1f1f1; --accent: #7f5eff; --card-bg: rgba(255, 255, 255, 0.05); }
+    .futuristic { --bg: linear-gradient(135deg, #4b00e0 0%, #8e2de2 100%); --text: #ffffff; --accent: #00e7ff; --card-bg: rgba(0, 255, 255, 0.1); }
+
+    /* ---------- Animations ---------- */
+    @keyframes slideIn { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button class="hamburger" aria-label="Open menu" onclick="toggleNav()">☰</button>
+        <div class="logo">
+          <img src="HelpNova.png" alt="HelpNova Logo">
+          <span>HelpNova</span>
+        </div>
+      </div>
+
+      <div class="nav-center" id="navCenter">
+        <ul>
+          <li><a href="landingultimate.html">🏠 Home</a></li>
+          <li><a href="tool.html">🛠️ Tools</a></li>
+          <li><a href="ai.html">🤖 AI Assistant</a></li>
+          <li><a href="code.html">▶️ Code Runner</a></li>
+        
+        </ul>
+      </div>
+
+      <div class="theme-switcher" aria-hidden="false">
+        <button onclick="setTheme('')">☀️ Light</button>
+        <button onclick="setTheme('dark')">🌙 Dark</button>
+        <button onclick="setTheme('futuristic')">✨ Futuristic</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- About Section -->
+  <div class="about-box">
+    <h2><i>About HelpNova:</i></h2>
+    <p class="aboutone">
+      HelpNova is a my first website . We offer tools, guides, and creative content made by Yahya
+      
+    </p>
+  </div>
+
+  <!-- Founder Section -->
+  <div class="founder-section">
+    <img src="HelpNova.png" alt="Founder Photo">
+
+    <div class="founder-text">
+      <h3>About Me</h3>
+      <p><strong><i>Founder &amp; Student:</i></strong></p>
+      <p>
+        Yahya is a passionate student and tech enthusiast who founded HelpNova with the
+        vision of helping people learn, build, and grow. He is a student of The Arqam School.
+        He also learns coding at Codingal.
+      </p>
+      <p>
+        Despite school work, Yahya works hard to make HelpNova better  
+        and help others through his knowledge.
+      </p>
+    </div>
+  </div>
+
+  <!-- Hire Me Section -->
+  <div class="hire-wrap">
+    <div class="hire-left">
+      <h1><strong><I><mark>Important Note!</mark></I></strong></h1>
+
+      <p class="note">
+        Need a website? I can build it for you — fast, modern, and responsive.
+      </p>
+
+      <div class="tiny">
+        I make landing pages, portfolio sites, business websites and more.
+      </div>
+
+      <div class="hire-footer">
+        Call on the phone number to contact me.
+      </div>
+    </div>
+
+    <aside class="hire-right">
+      <span class="badge">Hire Me — Website Builder</span>
+
+      <a class="phone" href="tel:03026065585">03026065585</a>
+
+      <a class="btn-hire" href="tel:03026065585">📞 Call &amp; Hire — 03026065585</a>
+    </aside>
+  </div>
+
+  <footer>
+    © 2025 HelpNova All rights reserved — Made with <span>❤</span> by Yahya
+  </footer>
+
+  <script>
+    function toggleNav(){
+      const navCenter = document.getElementById('navCenter');
+      if(!navCenter) return;
+      if(navCenter.style.display === 'flex' || navCenter.style.display === 'block'){
+        navCenter.style.display = 'none';
+      } else {
+        navCenter.style.display = 'block';
+        navCenter.style.flexDirection = 'column';
+        navCenter.style.background = 'rgba(0,0,0,0.06)';
+        navCenter.style.padding = '10px';
+        navCenter.style.borderRadius = '8px';
+      }
+    }
+
+    function setTheme(theme){
+      document.documentElement.classList.remove('dark', 'futuristic');
+      if(theme === 'dark') document.documentElement.classList.add('dark');
+      else if(theme === 'futuristic') document.documentElement.classList.add('futuristic');
+    }
+
+    window.addEventListener('resize', () => {
+      const navCenter = document.getElementById('navCenter');
+      if(window.innerWidth > 720 && navCenter){
+        navCenter.style.display = '';
+        navCenter.style.padding = '';
+        navCenter.style.background = '';
+        navCenter.style.flexDirection = '';
+      }
+    });
+  </script>
+</body>
+</html>
