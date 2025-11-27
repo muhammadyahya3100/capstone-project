@@ -321,15 +321,10 @@
       border-radius: 10px;
     }
 
-    .premium {
-      background: linear-gradient(45deg, #ff6b6b, #ffa500);
-      color: white;
-      padding: 30px;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      box-shadow: var(--shadow);
+    #premium {
+      background: var(--bg);
+      color: var(--text);
     }
-
     .ai-chat {
       max-height: 400px;
       overflow-y: auto;
@@ -358,7 +353,27 @@
       display: none;
     }
 
-   
+    @keyframes slideIn {
+      from {
+        transform: translateY(-100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
   </style>
 </head>
 
@@ -372,7 +387,7 @@
       </div>
       <div class="nav-center">
         <ul>
-          <li><a href="landingultimate.html"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
           <li><a href="about.html"><i class="fas fa-info-circle"></i> About&Hire</a></li>
           <li><a href="tool.html"><i class="fas fa-tools"></i> Tools</a></li>
           <li><a href="ai.html"><i class="fas fa-robot"></i> AI Assistant</a></li>
@@ -405,15 +420,20 @@
   </section>
 
   <!-- Premium -->
- <section id="premium">
+  <section id="premium">
     <h2><i class="fas fa-crown"></i> Premium Features</h2>
     <div class="premium">
-      <p>Unlock advanced AI features, exclusive courses, and personalized learning paths by upgrading to Premium!</p>
-      <button onclick="unlockPremium()"><i class="fas fa-lock-open"></i> Upgrade to Premium</button>
+      <h3>Unlock Advanced Courses</h3>
+      <p>Access advanced coding, math, science, and English courses.</p>
+      <button onclick="unlockPremium()"><i class="fas fa-unlock"></i> Upgrade to Premium</button>
+      <h3>Earn Certificates</h3>
+      <p>Get certificates for completing full courses.</p>
       <button onclick="generateCertificate()"><i class="fas fa-certificate"></i> Generate Certificate</button>
+      <h3>Premium Tools</h3>
+      <p>Extra customization options in tools, like advanced converters.</p>
     </div>
-
   </section>
+
   <script>
     // Theme Switcher
     function setTheme(theme) {
@@ -706,6 +726,7 @@
           <img src="HelpNova.png" class="d-block w-100" alt="Image 3">
         </div>
       </div>
+
       <!-- Controls -->
       <a class="carousel-control-prev" href="#wow1" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>
@@ -716,7 +737,9 @@
     </div>
   </div>
 
-
+  <!-- jQuery and Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
   <style>
     footer {
       background-color: #111;

@@ -200,7 +200,7 @@ textarea{
 
   <div class="nav-center">
     <ul>
-      <li><a href="landingultimate.html">🏠Home</a></li>
+      <li><a href="index.html">🏠Home</a></li>
       <li><a href="tool.html">🛠️Tools</a></li>
       <li><a href="ai.html">🤖AI Assistant</a></li>
       <li><a href="code.html">▶️Code Runner</a></li>
@@ -280,6 +280,79 @@ function toggleNav(){
   nav.style.display = nav.style.display === "flex" ? "none" : "flex";
 }
 </script>
+
+<style>
+footer {
+  background-color: #f0f8ff; /* soft light blue */
+  color: #333; /* dark text for readability */
+  text-align: center;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  border-top: 2px solid #add8e6; /* subtle border */
+}
+
+footer p {
+  margin: 0;
+}
+</style>
+<footer>
+  <p>💖 We’re grateful for your visit! Hope you find something that makes you smile! 🌟</p>
+</footer>
+
+<style>
+/* Footer Container */
+footer {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 50%, #a1c4fd 100%);
+  color: #fff;
+  text-align: center;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  border-top: 5px solid #fff;
+  box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+  animation: gradientShift 8s ease infinite;
+}
+
+/* Text glow & subtle pulse */
+footer p {
+  margin: 0;
+  text-shadow: 0 0 8px rgba(255,255,255,0.7), 0 0 20px rgba(255,255,255,0.3);
+  animation: pulse 2s infinite alternate;
+  cursor: default;
+}
+
+/* Gradient animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+footer {
+  background-size: 400% 400%;
+}
+
+/* Pulse animation for text */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Hover sparkle effect */
+footer:hover p::after {
+  content: " ✨";
+  animation: sparkle 1s infinite alternate;
+}
+@keyframes sparkle {
+  0% { opacity: 0; transform: translateY(0) scale(1); }
+  50% { opacity: 1; transform: translateY(-5px) scale(1.2); }
+  100% { opacity: 0; transform: translateY(0) scale(1); }
+}
+</style>
 
 </body>
 </html>

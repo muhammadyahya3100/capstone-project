@@ -14,7 +14,7 @@
         </div>
         <div class="nav-center">
             <ul>
-                <li><a href="landingultimate.html"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
               
         </div>
         <div class="nav-right">
@@ -449,11 +449,16 @@ if(savedThem) setTheme(savedThem);
             requestAnimationFrame(animateParticles);
         }
 
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        });
+      window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initParticles();
+});
+
+// ============================
+// YOUR CHAT API CODE STARTS HERE
+// ============================
+
 
         initParticles();
         animateParticles();
@@ -476,36 +481,7 @@ if(savedThem) setTheme(savedThem);
         function getAIResponse(userMessage) {
             const lowerMsg = userMessage.toLowerCase();
             let response = '';
-
-            if (lowerMsg.includes('?')) {
-                // Question detection
-                const qResponses = [
-                    `From the cosmos: That's a profound question! ${userMessage} The stars suggest pondering the infinite possibilities.`,
-                    `Galactic wisdom: ${userMessage} In the vast universe, answers often lie in curiosity itself.`,
-                    `Stellar query response: ${userMessage} Echoing back: Knowledge is the light in the dark void.`
-                ];
-                response = qResponses[Math.floor(Math.random() * qResponses.length)];
-            } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
-                response = 'Greetings, star traveler! The cosmos welcomes you. What adventure shall we embark on today? 🌟';
-            } else if (lowerMsg.includes('joke')) {
-                response = 'Why did the astronaut break up with his girlfriend? He needed space! 🚀 Want another?';
-            } else if (lowerMsg.includes('weather')) {
-                response = 'The cosmic weather is clear with a chance of shooting stars tonight. For Earthly forecasts, consult your local oracle! ☄️';
-            } else if (lowerMsg.includes('love') || lowerMsg.includes('great')) {
-                response = 'Your words warm the cold vacuum of space! Thank you, explorer. ❤️ What else lights your galaxy?';
-            } else {
-                // Default echo with twist
-                const echoes = [
-                    `Echo from the nebula: "${userMessage}" – The universe resonates with your voice.`,
-                    `Quantum reply: "${userMessage}" Fascinating input! Like a black hole, it pulls me in for more.`,
-                    `Interstellar insight: "${userMessage}" Aligning orbits... Agreed, the stars approve.`
-                ];
-                response = echoes[Math.floor(Math.random() * echoes.length)];
-            }
-
-            return response;
-        }
-
+}
         // Chat History
         function loadChatHistory() {
             const saved = localStorage.getItem('chatHistory');
@@ -545,7 +521,7 @@ if(savedThem) setTheme(savedThem);
                     <span>${time}</span>
                 </div>
                 <div>${text}</div>
-                ${isUser ? '<span class="emoji-reaction" onclick="reactToMessage(this, \'👍\')">👍</span><span class="emoji-reaction" onclick="reactToMessage(this, \'❤️\')">❤️</span>' : ''}
+                ${isUser ? '<span class="emoji-reaction" onclick="reactToMessage(this, \'\')"></span><span class="emoji-reaction" onclick="reactToMessage(this, \'\')"></span>' : ''}
             `;
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -622,4 +598,65 @@ if(savedThem) setTheme(savedThem);
         // Load chat history on start
         loadChatHistory();
     </script>
+    <script>
+        // api code
+const API_KEY = "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";
+async function sendMessage() {
+    const inputField = document.getElementById("userInput");
+    const chatBox = document.getElementById("chatMessages");
+    const userText = inputField.value.trim();
+    if (userText === "") return;
+
+    // User Message Show
+    chatBox.innerHTML += `
+        <div class="message user-message">
+            <div class="message-header">You</div>
+            ${userText}
+        </div>
+    `;
+    inputField.value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // Typing Indicator ON
+    document.getElementById("typingIndicator").style.display = "block";
+
+    // API Request
+    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+            "Authorization": `Bearer ${API_KEY}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+                { role: "user", content: userText }
+            ]
+        })
+    });
+
+    const data = await response.json();
+
+    const botReply = data.choices?.[0]?.message?.content || "Error!";
+
+    // Typing Indicator OFF
+    document.getElementById("typingIndicator").style.display = "none";
+
+    // AI Message Show
+    chatBox.innerHTML += `
+        <div class="message ai-message">
+            <div class="message-header">Ultra EchoBot</div>
+            ${botReply}
+        </div>
+    `;
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function handleKeyPress(event) {
+    if (event.key === "Enter") sendMessage();
+}
+
+
+    </script>
 </body>
+</html>
